@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="TestApiModelStoreContainer" CdmEntityContainer="TestApiEntities2">
+    <EntitySetMapping Name="MyFiles">
+      <EntityTypeMapping TypeName="TestApiModel.MyFile">
+        <MappingFragment StoreEntitySet="MyFiles">
+          <ScalarProperty Name="ForGroup" ColumnName="ForGroup" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="IdEquip" ColumnName="IdEquip" />
+          <ScalarProperty Name="IdGroup" ColumnName="IdGroup" />
+          <ScalarProperty Name="FileServerName" ColumnName="FileServerName" />
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+          <ScalarProperty Name="FileName" ColumnName="FileName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Equips">
+      <EntityTypeMapping TypeName="TestApiModel.Equip">
+        <MappingFragment StoreEntitySet="Equip">
+          <ScalarProperty Name="Nom" ColumnName="Nom" />
+          <ScalarProperty Name="IdGroup" ColumnName="IdGroup" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Groups">
+      <EntityTypeMapping TypeName="TestApiModel.Group">
+        <MappingFragment StoreEntitySet="Group">
+          <ScalarProperty Name="Nom" ColumnName="Nom" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="TestApiModel.User">
+        <MappingFragment StoreEntitySet="User">
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="UserEquip" TypeName="TestApiModel.UserEquip" StoreEntitySet="UserEquip">
+      <EndProperty Name="User">
+        <ScalarProperty Name="ID" ColumnName="IdUser" />
+      </EndProperty>
+      <EndProperty Name="Equip">
+        <ScalarProperty Name="ID" ColumnName="IdEquipe" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <EntitySetMapping Name="Messages">
+      <EntityTypeMapping TypeName="TestApiModel.Message">
+        <MappingFragment StoreEntitySet="Message">
+          <ScalarProperty Name="IdConversation" ColumnName="IdConversation" />
+          <ScalarProperty Name="Content" ColumnName="Content" />
+          <ScalarProperty Name="Time" ColumnName="Time" />
+          <ScalarProperty Name="IdUser" ColumnName="IdUser" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Conversations">
+      <EntityTypeMapping TypeName="TestApiModel.Conversation">
+        <MappingFragment StoreEntitySet="Conversation">
+          <ScalarProperty Name="streamId" ColumnName="streamId" />
+          <ScalarProperty Name="hasStream" ColumnName="hasStream" />
+          <ScalarProperty Name="LastMessageTime" ColumnName="LastMessageTime" />
+          <ScalarProperty Name="LastMessage" ColumnName="LastMessage" />
+          <ScalarProperty Name="IdUserContact" ColumnName="IdUserContact" />
+          <ScalarProperty Name="IdUserCree" ColumnName="IdUserCree" />
+          <ScalarProperty Name="IdGroup" ColumnName="IdGroup" />
+          <ScalarProperty Name="IdEquip" ColumnName="IdEquip" />
+          <ScalarProperty Name="Nom" ColumnName="Nom" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

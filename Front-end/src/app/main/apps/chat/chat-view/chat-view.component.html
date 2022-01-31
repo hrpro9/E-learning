@@ -1,0 +1,248 @@
+<!-- CHAT -->
+<div class="chat" fxFlex fxLayout="column">
+    <!-- CHAT TOOLBAR -->
+    <mat-toolbar class="chat-toolbar">
+        <div fxFlex fxLayout="row" fxLayoutAlign="space-between center">
+            <div fxLayout="row" fxLayoutAlign="start center">
+                <!-- RESPONSIVE CHATS BUTTON-->
+                <button
+                    mat-icon-button
+                    fxHide.gt-md
+                    class="responsive-chats-button mr-16"
+                    fuseMatSidenavToggler="chat-left-sidenav"
+                    aria-label="chats button"
+                >
+                    <mat-icon>chat</mat-icon>
+                </button>
+                <!-- / RESPONSIVE CHATS BUTTON-->
+
+                <!-- CHAT CONTACT-->
+                <div
+                    class="chat-contact"
+                    fxLayout="row"
+                    fxLayoutAlign="start center"
+                    fuseMatSidenavToggler="chat-right-sidenav"
+                    (click)="selectContact()"
+                >
+                    <div class="avatar-wrapper">
+                        <img
+                            class="avatar"
+                            *ngIf="chat.type !== 'Privé'"
+                            src="https://www.pngitem.com/pimgs/m/69-699673_transparent-water-play-sprinkler-clipart-people-user-group.png"
+                            alt="{{ chat.name }}"
+                        />
+
+                        <img
+                            class="avatar"
+                            *ngIf="
+                                chat.type === 'Privé' &&
+                                user.id === chat.userCree
+                            "
+                            src="{{
+                                contacts | getById: chat.userContact:'avatar'
+                            }}"
+                            alt="{{
+                                contacts | getById: chat.userContact:'name'
+                            }}"
+                        />
+
+                        <img
+                            class="avatar"
+                            *ngIf="
+                                chat.type === 'Privé' &&
+                                user.id === chat.userContact
+                            "
+                            src="{{
+                                contacts | getById: chat.userCree:'avatar'
+                            }}"
+                            alt="{{ contacts | getById: chat.userCree:'name' }}"
+                        />
+
+                        <mat-icon class="s-16 status" [ngClass]="chat.status">
+                        </mat-icon>
+                    </div>
+
+                    <div
+                        class="chat-contact-name"
+                        *ngIf="chat.type !== 'Privé'"
+                    >
+                        {{ chat.name }}
+                    </div>
+                    <div
+                        class="contact-name"
+                        *ngIf="
+                            chat.type === 'Privé' && user.id === chat.userCree
+                        "
+                    >
+                        {{ contacts | getById: chat.userContact:"name" }}
+                    </div>
+                    <div
+                        class="contact-name"
+                        *ngIf="
+                            chat.type === 'Privé' &&
+                            user.id === chat.userContact
+                        "
+                    >
+                        {{ contacts | getById: chat.userCree:"name" }}
+                    </div>
+                </div>
+                <!-- / CHAT CONTACT-->
+            </div>
+
+            <div>
+                <button
+                    mat-icon-button
+                    [matMenuTriggerFor]="contactMenu"
+                    aria-label="more"
+                >
+                    <mat-icon>more_vert</mat-icon>
+                </button>
+
+                <mat-menu #contactMenu="matMenu">
+                    <button
+                        mat-menu-item
+                        fuseMatSidenavToggler="chat-right-sidenav"
+                        (click)="selectContact()"
+                    >
+                        Contact Info
+                    </button>
+                </mat-menu>
+            </div>
+        </div>
+    </mat-toolbar>
+    <!-- / CHAT TOOLBAR -->
+
+    <!-- CHAT CONTENT -->
+    <div id="chat-content" fxFlex="1 1 auto" fusePerfectScrollbar>
+        <!-- CHAT MESSAGES -->
+        <div class="chat-messages">
+            <!-- MESSAGE -->
+            <div
+                *ngFor="let message of dialog; let i = index"
+                class="message-row"
+                [ngClass]="{
+                    me: message.who === user.id,
+                    contact: message.who !== user.id,
+                    'first-of-group': isFirstMessageOfGroup(message, i),
+                    'last-of-group': isLastMessageOfGroup(message, i)
+                }"
+            >
+                <img
+                    *ngIf="shouldShowContactAvatar(message, i)"
+                    src="{{ contacts | getById: message.who:'avatar' }}"
+                    class="avatar"
+                />
+                <p class="meta" *ngIf="shouldShowContactName(message, i)">
+                    {{ contacts | getById: message.who:"name" }}
+                </p>
+                <div class="bubble">
+                    <div class="message">{{ message.message }}</div>
+                    <div class="time secondary-text">
+                        {{ message.time | date: "short" }}
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="chat.hasStream" class="message-row">
+                <a #joinStreamLink href="/apps/stream/{{ chat.streamId }}"></a>
+                <button class="joinLiveButton" (click)="joinStreamLink.click()">
+                    join Stream
+                </button>
+            </div>
+
+            <div *ngIf="chat.hasConference" class="message-row">
+                <a
+                    #joinConferenceLink
+                    href="/apps/conference/{{ chat.conferenceId }}"
+                ></a>
+                <button
+                    class="joinLiveButton"
+                    (click)="joinConferenceLink.click()"
+                >
+                    join Conference
+                </button>
+            </div>
+            <!-- / MESSAGE -->
+        </div>
+        <!-- CHAT MESSAGES -->
+    </div>
+    <!-- / CHAT CONTENT -->
+
+    <!-- CHAT FOOTER -->
+    <div class="chat-footer" fxFlex="0 0 auto" fxLayout="column">
+        <!-- REPLY FORM -->
+        <div
+            class="reply-form"
+            fxFlex="0 0 auto"
+            fxLayout="row"
+            fxLayoutAlign="center center"
+        >
+            <form
+                #replyForm="ngForm"
+                (ngSubmit)="reply($event)"
+                (keydown.enter)="reply($event)"
+                fxFlex
+                fxLayout="row"
+                fxLayoutAlign="start center"
+            >
+                <mat-form-field
+                    class="message-text"
+                    fxFlex
+                    floatLabel="never"
+                    appearance="standard"
+                >
+                    <textarea
+                        matInput
+                        #replyInput
+                        placeholder="Type your message"
+                        ngModel
+                        name="message"
+                        [rows]="1"
+                        [matTextareaAutosize]="true"
+                    ></textarea>
+                </mat-form-field>
+
+                <button
+                    *ngIf="
+                        chat.type != 'Privé' &&
+                        !chat.hasStream &&
+                        !chat.hasConference
+                    "
+                    class="start-stream-button"
+                    mat-icon-button
+                    type="button"
+                    (click)="StartStream()"
+                    aria-label="Start meeting"
+                >
+                    <i class="material-icons-round live_tv"></i>
+                </button>
+
+                <button
+                    *ngIf="
+                        chat.type != 'Privé' &&
+                        !chat.hasStream &&
+                        !chat.hasConference
+                    "
+                    class="start-conference-button"
+                    mat-icon-button
+                    type="button"
+                    (click)="StartConference()"
+                    aria-label="Start meeting"
+                >
+                    <i class="material-icons-round videoIcon"></i>
+                </button>
+
+                <button
+                    class="send-message-button"
+                    mat-icon-button
+                    type="submit"
+                    aria-label="Send message"
+                >
+                    <mat-icon class="secondary-text">send</mat-icon>
+                </button>
+            </form>
+        </div>
+        <!-- / REPLY FORM -->
+    </div>
+    <!-- / CHAT FOOTER-->
+</div>
+<!-- / CHAT -->

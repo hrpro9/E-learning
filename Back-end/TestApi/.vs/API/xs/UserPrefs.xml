@@ -1,0 +1,29 @@
+﻿<Properties StartupConfiguration="{D1ABB374-F458-4433-94CF-4CBE5DEE85F5}|">
+  <MonoDevelop.Ide.Workbench ActiveDocument="API/packages.config">
+    <Files>
+      <File FileName="../../../../../../../Applications/Visual Studio.app/Contents/Resources/lib/monodevelop/bin/MSBuild/Current/bin/Microsoft.Common.CurrentVersion.targets" Line="3" Column="9" />
+      <File FileName="API/API.csproj" Line="196" Column="34" />
+      <File FileName="API/Global.asax" />
+      <File FileName="API/Web.config" Line="77" Column="19" />
+      <File FileName="API/packages.config" Line="1" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="API" expanded="True">
+            <Node name="API" expanded="True">
+              <Node name="packages.config" selected="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.ItemProperties.API PreferredExecutionTarget="/Applications/Google Chrome.app" />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>

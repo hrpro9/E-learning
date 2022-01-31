@@ -1,0 +1,5 @@
+@import 'http://vjs.zencdn.net/7.0/video-js.min.css';
+.video {
+    width: 100vw;
+    min-height: 75vh;
+}

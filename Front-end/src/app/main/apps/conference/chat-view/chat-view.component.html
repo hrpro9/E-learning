@@ -1,0 +1,100 @@
+<!-- CHAT -->
+<div class="chat" fxFlex fxLayout="column">
+
+    <!-- CHAT TOOLBAR -->
+    <mat-toolbar class="chat-toolbar">
+
+        <div fxFlex fxLayout="row" fxLayoutAlign="space-between center">
+
+            <div fxLayout="row" fxLayoutAlign="start center">
+
+                <!-- CHAT CONTACT-->
+                <div class="chat-contact" fxLayout="row" fxLayoutAlign="start center"
+                    fuseMatSidenavToggler="chat-right-sidenav">
+
+                    <div class="avatar-wrapper">
+
+                        <img class="avatar"
+                            src="https://www.pngitem.com/pimgs/m/69-699673_transparent-water-play-sprinkler-clipart-people-user-group.png"
+                            alt="{{chat.name}}" />
+                    </div>
+
+                    <div class="chat-contact-name">
+                        {{chat.name}}
+                    </div>
+
+                    <div>
+                        {{usersCount}}
+                        {{users}}
+                    </div>
+                </div>
+                <!-- / CHAT CONTACT-->
+            </div>
+
+        </div>
+    </mat-toolbar>
+    <!-- / CHAT TOOLBAR -->
+
+    <!-- CHAT CONTENT -->
+    <div id="chat-content" fxFlex="1 1 auto" fusePerfectScrollbar>
+
+        <!-- CHAT MESSAGES -->
+        <div class="chat-messages">
+
+            <!-- MESSAGE -->
+            <div *ngFor="let message of dialog; let i = index" class="message-row" [ngClass]="{
+                            'me': message.who === user.id,
+                            'contact': message.who !== user.id,
+                            'first-of-group': isFirstMessageOfGroup(message, i),
+                            'last-of-group': isLastMessageOfGroup(message, i)
+                            }">
+
+                <img *ngIf="shouldShowContactAvatar(message, i)" src="{{contacts | getById:message.who:'avatar'}}"
+                    class="avatar">
+                <p class="meta" *ngIf="shouldShowContactName(message, i)">
+                    {{contacts | getById:message.who:'name'}}</p>
+                <div class="bubble">
+                    <div class="message">{{message.message}}</div>
+                    <div class="time secondary-text">{{message.time | date:'short'}}</div>
+                </div>
+
+            </div>
+
+            <!-- / MESSAGE -->
+
+        </div>
+        <!-- CHAT MESSAGES -->
+
+    </div>
+    <!-- / CHAT CONTENT -->
+
+    <!-- CHAT FOOTER -->
+    <div class="chat-footer d-flex justify-content-center mt-auto" fxFlex="0 0 auto" fxLayout="column">
+
+        <!-- REPLY FORM -->
+        <div class="reply-form" fxFlex="0 0 auto" fxLayout="row" fxLayoutAlign="center center">
+
+            <form #replyForm="ngForm" (ngSubmit)="reply($event)" (keydown.enter)="reply($event)" fxFlex fxLayout="row"
+                fxLayoutAlign="start center">
+
+                <mat-form-field class="message-text" fxFlex floatLabel="never" appearance="standard">
+                    <textarea matInput #replyInput placeholder="Type your message" ngModel name="message" [rows]="1"
+                        [matTextareaAutosize]="true"></textarea>
+                </mat-form-field>
+
+
+                <button class="send-message-button" mat-icon-button type="submit" aria-label="Send message">
+                    <mat-icon class="secondary-text">send</mat-icon>
+                </button>
+
+
+            </form>
+
+        </div>
+        <!-- / REPLY FORM -->
+
+    </div>
+    <!-- / CHAT FOOTER-->
+
+</div>
+<!-- / CHAT -->

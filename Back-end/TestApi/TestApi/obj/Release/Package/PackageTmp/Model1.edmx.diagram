@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="bf3e67159059406fa3953f8f22c56d5d" Name="Diagram1">
+        <EntityTypeShape EntityType="TestApiModel.MyFile" Width="1.5" PointX="1.375" PointY="0.75" />
+        <EntityTypeShape EntityType="TestApiModel.Equip" Width="1.5" PointX="4.5" PointY="3.375" />
+        <EntityTypeShape EntityType="TestApiModel.Group" Width="1.5" PointX="1.5" PointY="4.125" />
+        <EntityTypeShape EntityType="TestApiModel.User" Width="1.5" PointX="5.75" PointY="0.5" />
+        <AssociationConnector Association="TestApiModel.FK_Equip_Group" />
+        <AssociationConnector Association="TestApiModel.UserEquip" />
+        <AssociationConnector Association="TestApiModel.FK_MyFiles_Equip" ManuallyRouted="true" >
+          <ConnectorPoint PointX="4.5" PointY="3.78099659375" />
+          <ConnectorPoint PointX="2.7083333333333335" PointY="3.78099659375" />
+          <ConnectorPoint PointX="2.7083333333333335" PointY="3.5923886415625" />
+          <ConnectorPoint PointX="2.7263369036169864" PointY="3.5923886415625" />
+          <ConnectorPoint PointX="2.7263369036169864" PointY="3.4994921875" />
+        </AssociationConnector>
+        <AssociationConnector Association="TestApiModel.FK_MyFiles_Group" />
+        <EntityTypeShape EntityType="TestApiModel.Message" Width="1.5" PointX="8" PointY="2" />
+        <AssociationConnector Association="TestApiModel.FK_Message_User" />
+        <EntityTypeShape EntityType="TestApiModel.Conversation" Width="1.5" PointX="10.875" PointY="0.75" />
+        <AssociationConnector Association="TestApiModel.FK_Conversation_Equip" />
+        <AssociationConnector Association="TestApiModel.FK_Conversation_Group" />
+        <AssociationConnector Association="TestApiModel.FK_Conversation_User" ManuallyRouted="true" >
+          <ConnectorPoint PointX="7.25" PointY="1.34375" />
+          <ConnectorPoint PointX="9.0625" PointY="1.34375" />
+          <ConnectorPoint PointX="9.0625" PointY="1.3193136562156449" />
+          <ConnectorPoint PointX="10.875" PointY="1.3193136562156449" />
+        </AssociationConnector>
+        <AssociationConnector Association="TestApiModel.FK_Conversation_User1" />
+        <AssociationConnector Association="TestApiModel.FK_Message_Conversation" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

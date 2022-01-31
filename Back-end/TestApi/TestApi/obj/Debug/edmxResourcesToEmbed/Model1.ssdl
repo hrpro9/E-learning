@@ -1,0 +1,257 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="TestApiModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Conversation">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="Type" Type="nvarchar" MaxLength="50" />
+    <Property Name="Nom" Type="nvarchar" MaxLength="250" />
+    <Property Name="IdEquip" Type="nvarchar" MaxLength="50" />
+    <Property Name="IdGroup" Type="nvarchar" MaxLength="50" />
+    <Property Name="IdUserCree" Type="nvarchar" MaxLength="50" />
+    <Property Name="IdUserContact" Type="nvarchar" MaxLength="50" />
+    <Property Name="LastMessage" Type="nvarchar" MaxLength="300" />
+    <Property Name="LastMessageTime" Type="datetime" />
+    <Property Name="hasStream" Type="bit" />
+    <Property Name="streamId" Type="nvarchar" MaxLength="200" />
+  </EntityType>
+  <EntityType Name="Equip">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Nom" Type="nchar" MaxLength="10" />
+    <Property Name="IdGroup" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Group">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Nom" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Message">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="IdUser" Type="nvarchar" MaxLength="50" />
+    <Property Name="Time" Type="datetime" />
+    <Property Name="Content" Type="nvarchar" MaxLength="400" />
+    <Property Name="IdConversation" Type="nvarchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="MyFiles">
+    <Key>
+      <PropertyRef Name="FileName" />
+    </Key>
+    <Property Name="FileName" Type="nvarchar" MaxLength="200" Nullable="false" />
+    <Property Name="ModifiedDate" Type="datetime" />
+    <Property Name="FileServerName" Type="nvarchar" MaxLength="200" />
+    <Property Name="IdGroup" Type="nvarchar" MaxLength="50" />
+    <Property Name="IdEquip" Type="nvarchar" MaxLength="50" />
+    <Property Name="Type" Type="nvarchar" MaxLength="50" />
+    <Property Name="ForGroup" Type="bit" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="UserName" Type="nvarchar" MaxLength="50" />
+    <Property Name="Password" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="UserEquip">
+    <Key>
+      <PropertyRef Name="IdUser" />
+      <PropertyRef Name="IdEquipe" />
+    </Key>
+    <Property Name="IdUser" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="IdEquipe" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Conversation_Equip">
+    <End Role="Equip" Type="Self.Equip" Multiplicity="0..1" />
+    <End Role="Conversation" Type="Self.Conversation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Equip">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Conversation">
+        <PropertyRef Name="IdEquip" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Conversation_Group">
+    <End Role="Group" Type="Self.Group" Multiplicity="0..1" />
+    <End Role="Conversation" Type="Self.Conversation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Group">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Conversation">
+        <PropertyRef Name="IdGroup" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Conversation_User">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="Conversation" Type="Self.Conversation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Conversation">
+        <PropertyRef Name="IdUserCree" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Conversation_User1">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="Conversation" Type="Self.Conversation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Conversation">
+        <PropertyRef Name="IdUserContact" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Equip_Group">
+    <End Role="Group" Type="Self.Group" Multiplicity="0..1" />
+    <End Role="Equip" Type="Self.Equip" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Group">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Equip">
+        <PropertyRef Name="IdGroup" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Message_Conversation">
+    <End Role="Conversation" Type="Self.Conversation" Multiplicity="0..1" />
+    <End Role="Message" Type="Self.Message" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Conversation">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Message">
+        <PropertyRef Name="IdConversation" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Message_User">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="Message" Type="Self.Message" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Message">
+        <PropertyRef Name="IdUser" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MyFiles_Equip">
+    <End Role="Equip" Type="Self.Equip" Multiplicity="0..1" />
+    <End Role="MyFiles" Type="Self.MyFiles" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Equip">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="MyFiles">
+        <PropertyRef Name="IdEquip" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MyFiles_Group">
+    <End Role="Group" Type="Self.Group" Multiplicity="0..1" />
+    <End Role="MyFiles" Type="Self.MyFiles" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Group">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="MyFiles">
+        <PropertyRef Name="IdGroup" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserEquip_Equip">
+    <End Role="Equip" Type="Self.Equip" Multiplicity="1" />
+    <End Role="UserEquip" Type="Self.UserEquip" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Equip">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="UserEquip">
+        <PropertyRef Name="IdEquipe" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserEquip_User">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="UserEquip" Type="Self.UserEquip" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="UserEquip">
+        <PropertyRef Name="IdUser" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="TestApiModelStoreContainer">
+    <EntitySet Name="Conversation" EntityType="Self.Conversation" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Equip" EntityType="Self.Equip" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Group" EntityType="Self.Group" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Message" EntityType="Self.Message" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MyFiles" EntityType="Self.MyFiles" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserEquip" EntityType="Self.UserEquip" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Conversation_Equip" Association="Self.FK_Conversation_Equip">
+      <End Role="Equip" EntitySet="Equip" />
+      <End Role="Conversation" EntitySet="Conversation" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Conversation_Group" Association="Self.FK_Conversation_Group">
+      <End Role="Group" EntitySet="Group" />
+      <End Role="Conversation" EntitySet="Conversation" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Conversation_User" Association="Self.FK_Conversation_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="Conversation" EntitySet="Conversation" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Conversation_User1" Association="Self.FK_Conversation_User1">
+      <End Role="User" EntitySet="User" />
+      <End Role="Conversation" EntitySet="Conversation" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Equip_Group" Association="Self.FK_Equip_Group">
+      <End Role="Group" EntitySet="Group" />
+      <End Role="Equip" EntitySet="Equip" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Message_Conversation" Association="Self.FK_Message_Conversation">
+      <End Role="Conversation" EntitySet="Conversation" />
+      <End Role="Message" EntitySet="Message" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Message_User" Association="Self.FK_Message_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="Message" EntitySet="Message" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MyFiles_Equip" Association="Self.FK_MyFiles_Equip">
+      <End Role="Equip" EntitySet="Equip" />
+      <End Role="MyFiles" EntitySet="MyFiles" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MyFiles_Group" Association="Self.FK_MyFiles_Group">
+      <End Role="Group" EntitySet="Group" />
+      <End Role="MyFiles" EntitySet="MyFiles" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserEquip_Equip" Association="Self.FK_UserEquip_Equip">
+      <End Role="Equip" EntitySet="Equip" />
+      <End Role="UserEquip" EntitySet="UserEquip" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserEquip_User" Association="Self.FK_UserEquip_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="UserEquip" EntitySet="UserEquip" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

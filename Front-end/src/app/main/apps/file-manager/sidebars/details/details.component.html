@@ -1,0 +1,74 @@
+<div *ngIf="selected">
+    <!-- SIDEBAR HEADER -->
+    <div
+        class="header accent p-24"
+        fxLayout="column"
+        fxLayoutAlign="space-between"
+    >
+        <div class="toolbar" fxLayout="row" fxLayoutAlign="end center">
+            <button mat-icon-button matTooltip="Delete">
+                <mat-icon>delete</mat-icon>
+            </button>
+
+            <button
+                mat-icon-button
+                class=""
+                aria-label="Download"
+                matTooltip="Download"
+            >
+                <mat-icon>file_download</mat-icon>
+            </button>
+
+            <button mat-icon-button aria-label="More" matTooltip="More">
+                <mat-icon>more_vert</mat-icon>
+            </button>
+        </div>
+
+        <div>
+            <div class="title mb-8">{{ selected.FileName }}</div>
+            <div class="subtitle secondary-text">
+                <span>Edited</span>
+                <span>: {{ selected.ModifiedDate }}</span>
+            </div>
+        </div>
+    </div>
+    <!-- / SIDEBAR HEADER -->
+
+    <!-- SIDEBAR CONTENT -->
+    <div class="content p-24" fusePerfectScrollbar>
+        <div
+            class="file-details"
+            [@animate]="{ value: '*', params: { delay: '200ms' } }"
+        >
+            <div
+                class="preview file-icon"
+                fxLayout="row"
+                fxLayoutAlign="center center"
+            >
+                <mat-icon
+                    class="type-icon s-48"
+                    [ngClass]="selected.type"
+                ></mat-icon>
+            </div>
+
+            <button class="btnDownload" (click)="Download()" color="warn">
+                Download
+            </button>
+
+            <div class="title">Info</div>
+
+            <table>
+                <tr class="name">
+                    <th>Name</th>
+                    <td>{{ selected.FileName }}</td>
+                </tr>
+
+                <tr class="modified">
+                    <th>Modified</th>
+                    <td>{{ selected.ModifiedDate }}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <!-- / SIDEBAR CONTENT -->
+</div>
